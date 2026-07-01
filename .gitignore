@@ -75,3 +75,17 @@ haikus_dolphin.log
 .models/
 voices/
 models/tts/
+
+# Additional sensitive patterns
+*token*
+*secret*
+*key*
+*.pem
+*.crt
+*password*
+*.env*
+# Personal / confidential dirs
+var-www/
+# Any other internal
+*.bak
+*~
