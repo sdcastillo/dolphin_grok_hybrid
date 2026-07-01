@@ -1,1 +1,33 @@
-$(cat /root/LICENSE)
+GNU GENERAL PUBLIC LICENSE
+Version 3, 29 June 2007
+
+Copyright (C) 2026 Sam Castillo
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+ADDITIONAL TERMS - NO CLONING ALLOWED WITHOUT PERMISSION
+
+This is a GPL v3 based license with additional restrictions:
+
+- NO CLONING: You may not clone, fork, or copy this repository or its contents for any purpose without explicit prior written permission from the copyright holder (Sam Castillo).
+
+Separate licenses apply to specific components:
+- DATE: All date-related, historical, and time-sensitive content is licensed under GPL v3 + no commercial use without permission.
+- MODEL: AI model configurations, prompts, and hybrid logic (Dolphin + Grok) are licensed under GPL v3 with attribution required; no reverse engineering or redistribution of trained artifacts.
+- WEBSITE: All HTML, CSS, JS, and web content in static/hub/ and var-www/ (including educational pages on Second Amendment, trans athletes, etc.) are under GPL v3 + no cloning; educational use only with link back.
+- Image/Personal IP Brand Assets: All images, logos, personal photos, brand assets, generated art (Minecraft style etc.), and IP related to "Samuel Castillo", "Dolphin Grok Hybrid", or personal branding are STRICTLY RESERVED. No use, reproduction, or derivative works without explicit written license from the owner. Personal photos and brand assets are not covered under GPL and require separate permission.
+
+For permissions beyond GPL or questions about the additional terms, contact the author.
+
+This license applies to the software and content as a whole. Individual files may have additional headers.
