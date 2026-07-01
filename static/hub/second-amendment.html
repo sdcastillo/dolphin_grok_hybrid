@@ -1,1 +1,581 @@
-$(cat /root/static/hub/second-amendment.html)
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="referrer" content="no-referrer">
+  <meta name="description" content="An educational overview of the Second Amendment to the United States Constitution — text, history, Supreme Court rulings, and modern context.">
+  <title>The Second Amendment • Samuel Castillo</title>
+  <link rel="icon" type="image/x-icon" href="/static/assets/images/favicon.ico">
+
+  <!-- Auth0 scripts -->
+  <script type="module" src="/auth-config.js" defer></script>
+  <script type="module" src="/auth.js" defer></script>
+
+  <style>
+    :root {
+      --bg: #16141f;
+      --text-primary: #e8e4f0;
+      --text-secondary: #b5adbd;
+      --text-muted: #8a8494;
+      --surface: #211f2e;
+      --surface-hover: #2a2838;
+      --border: #322f40;
+      --accent: #f48fb1;
+      --accent-hover: #f9a66d;
+      --highlight: #f48fb1;
+      --success: #8bc99a;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text-primary);
+      line-height: 1.7;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Top back bar */
+    .topbar {
+      background: #211f2e;
+      padding: 8px 16px;
+      font-size: 0.85rem;
+      text-align: center;
+      border-bottom: 1px solid #322f40;
+    }
+    .topbar a { color: #f48fb1; text-decoration: none; }
+    .topbar a:hover { text-decoration: underline; }
+
+    /* Consistent Header + Nav */
+    .main-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.75rem 5%;
+      background: rgba(22,20,31,0.94);
+      border-bottom: 1px solid var(--border);
+      flex-wrap: wrap;
+      gap: 1rem;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(6px);
+    }
+    .nav-left, .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      flex-wrap: wrap;
+    }
+    .main-nav a {
+      text-decoration: none;
+      color: var(--text-secondary);
+      font-weight: 500;
+      transition: color 0.2s;
+      font-size: 0.95rem;
+    }
+    .main-nav a:hover, .main-nav a.active {
+      color: var(--accent);
+    }
+    .brand {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #f0edf5 !important;
+      letter-spacing: 0.3px;
+    }
+
+    .dropdown {
+      position: relative;
+      display: inline-block;
+    }
+    .dropbtn {
+      background: none;
+      border: none;
+      color: var(--text-secondary);
+      font-weight: 500;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.95rem;
+      font-family: inherit;
+    }
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      right: 0;
+      top: 100%;
+      background: var(--surface);
+      min-width: 260px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.6);
+      z-index: 1000;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-8px);
+      transition: all 0.2s ease;
+      max-height: 420px;
+      overflow-y: auto;
+    }
+    .dropdown:hover .dropdown-content {
+      display: block;
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+    .dropdown-content a {
+      color: var(--text-secondary);
+      padding: 0.65rem 1rem;
+      display: block;
+      font-size: 0.92rem;
+    }
+    .dropdown-content a:hover {
+      background: var(--surface-hover);
+      color: var(--accent);
+    }
+
+    main {
+      flex: 1;
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 2.5rem 5% 4rem;
+    }
+
+    h1 {
+      font-size: 2.8rem;
+      text-align: center;
+      margin: 0 0 0.5rem;
+      color: #f0edf5;
+      line-height: 1.1;
+    }
+    .subtitle {
+      text-align: center;
+      font-size: 1.15rem;
+      color: var(--text-secondary);
+      margin-bottom: 2rem;
+    }
+
+    .amendment-text {
+      background: var(--surface);
+      border: 2px solid var(--accent);
+      border-radius: 16px;
+      padding: 2rem 2.25rem;
+      font-size: 1.35rem;
+      line-height: 1.45;
+      text-align: center;
+      margin: 2rem 0;
+      color: #f0edf5;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    }
+    .amendment-text .label {
+      display: block;
+      font-size: 0.75rem;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.75rem;
+      font-weight: 600;
+    }
+
+    h2 {
+      color: var(--accent);
+      font-size: 1.65rem;
+      margin: 2.25rem 0 0.75rem;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 0.4rem;
+    }
+    h3 {
+      color: #f0edf5;
+      font-size: 1.25rem;
+      margin: 1.75rem 0 0.5rem;
+    }
+
+    p, li {
+      font-size: 1.02rem;
+      color: var(--text-secondary);
+    }
+
+    blockquote {
+      border-left: 5px solid var(--accent);
+      margin: 1.75rem 0;
+      padding: 0.8rem 1.5rem;
+      background: rgba(244, 143, 177, 0.06);
+      font-style: italic;
+      color: #d2c9df;
+    }
+
+    .fact-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+    .fact-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.1rem 1.3rem;
+      transition: transform .2s, border-color .2s;
+    }
+    .fact-card:hover {
+      transform: translateY(-2px);
+      border-color: var(--accent);
+    }
+    .fact-card .label {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--accent);
+      margin-bottom: 6px;
+      display: block;
+    }
+    .fact-card strong {
+      color: #f0edf5;
+    }
+
+    .cases-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1rem;
+      margin: 1.25rem 0 2rem;
+    }
+    .case-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1rem 1.15rem;
+      transition: all .2s ease;
+    }
+    .case-card:hover {
+      border-color: var(--accent);
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
+    }
+    .case-card .year {
+      font-size: 0.85rem;
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .case-card h4 {
+      margin: 4px 0 8px;
+      color: #f0edf5;
+      font-size: 1.05rem;
+    }
+    .case-card p {
+      font-size: 0.95rem;
+      margin: 0;
+    }
+
+    .timeline {
+      border-left: 3px solid var(--border);
+      padding-left: 1.75rem;
+      margin: 1.5rem 0;
+    }
+    .timeline-item {
+      margin-bottom: 1.35rem;
+      position: relative;
+    }
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -11px;
+      top: 6px;
+      width: 17px;
+      height: 17px;
+      background: var(--accent);
+      border-radius: 50%;
+      border: 3px solid var(--bg);
+    }
+    .timeline-item .date {
+      font-size: 0.9rem;
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    ul {
+      padding-left: 1.3rem;
+    }
+    li { margin: 0.4rem 0; }
+
+    .info-box {
+      background: var(--surface);
+      border-left: 5px solid var(--accent);
+      padding: 1rem 1.25rem;
+      border-radius: 8px;
+      margin: 1.5rem 0;
+    }
+
+    .nav-cta {
+      background: var(--accent);
+      color: #16141f !important;
+      padding: 0.35rem 0.85rem;
+      border-radius: 999px;
+      font-weight: 600;
+      font-size: 0.85rem;
+    }
+
+    footer {
+      background: var(--surface);
+      padding: 2rem 5%;
+      text-align: center;
+      border-top: 1px solid var(--border);
+      margin-top: auto;
+    }
+    footer p, footer a {
+      color: var(--text-muted);
+      font-size: 0.92rem;
+    }
+    footer a { color: var(--accent); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+
+    .back-link {
+      display: inline-block;
+      margin-bottom: 1.5rem;
+      color: var(--accent);
+      text-decoration: none;
+      font-size: 0.95rem;
+    }
+    .back-link:hover { text-decoration: underline; }
+
+    @media (max-width: 700px) {
+      h1 { font-size: 2.1rem; }
+      .amendment-text { font-size: 1.15rem; padding: 1.4rem; }
+      .main-nav { padding: 0.65rem 4%; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Topbar -->
+  <div class="topbar">
+    <a href="/">← Back to Resource Hub + Dolphin Chat</a>
+  </div>
+
+  <!-- Navigation -->
+  <header>
+    <nav class="main-nav">
+      <div class="nav-left">
+        <a href="/hub/index.html" class="brand">Samuel Castillo</a>
+        <a href="/hub/index.html">Hub</a>
+      </div>
+      <div class="nav-right">
+        <a href="/hub/about.html">About</a>
+        <a href="/hub/code.html">Code</a>
+        <a href="/hub/studymanual.html">PA-R Study Manual</a>
+        <a href="/hub/contact.html">Contact</a>
+        <div class="dropdown">
+          <button class="dropbtn">Projects &amp; Articles ↓</button>
+          <div class="dropdown-content">
+            <a href="/hub/second-amendment.html">Second Amendment</a>
+            <a href="/hub/trans-athletes-sports.html">Trans Athletes in Sports</a>
+            <a href="/hub/github_pages_ethical_ai.html">Ethical AI</a>
+            <a href="/hub/github_pages_prompt_engineering.html">Prompt Engineering Guide</a>
+            <a href="/hub/github_pages_dataviz.html">Data Visualization</a>
+            <a href="/hub/github_pages_central_limit_theorem.html">Central Limit Theorem</a>
+            <a href="/hub/surveillance-cameras.html">Surveillance Cameras</a>
+            <a href="/hub/bigdata.html">Big Data</a>
+          </div>
+        </div>
+        <a href="/" class="nav-cta">Ask Dolphin</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <a href="/hub/index.html" class="back-link">← Back to all resources</a>
+
+    <h1>The Second Amendment</h1>
+    <p class="subtitle">A well regulated Militia, being necessary to the security of a free State, the right of the people to keep and bear Arms, shall not be infringed.</p>
+
+    <!-- The Text -->
+    <div class="amendment-text">
+      <span class="label">U.S. Constitution • Bill of Rights • Amendment II</span>
+      “A well regulated Militia, being necessary to the security of a free State, the right of the people to keep and bear Arms, shall not be infringed.”
+    </div>
+
+    <p style="text-align:center; opacity:0.8; font-size:0.95rem; margin-top:-0.5rem;">
+      Ratified December 15, 1791 — 27 words that continue to shape American law and culture.
+    </p>
+
+    <!-- Quick Facts -->
+    <h2>Quick Facts</h2>
+    <div class="fact-grid">
+      <div class="fact-card">
+        <span class="label">Adoption</span>
+        <strong>1791</strong><br>
+        Part of the original Bill of Rights (first 10 amendments)
+      </div>
+      <div class="fact-card">
+        <span class="label">Structure</span>
+        <strong>1 sentence, 2 clauses</strong><br>
+        Prefatory (militia) + Operative (right to keep &amp; bear arms)
+      </div>
+      <div class="fact-card">
+        <span class="label">Scope</span>
+        <strong>Individual Right</strong><br>
+        Recognized by the Supreme Court as protecting an individual’s right (not solely collective)
+      </div>
+      <div class="fact-card">
+        <span class="label">Incorporated</span>
+        <strong>2010</strong><br>
+        Applies to state and local governments via the 14th Amendment (McDonald v. Chicago)
+      </div>
+    </div>
+
+    <!-- History -->
+    <h2>Historical Context</h2>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="date">1775–1783</div>
+        <p>American Revolutionary War. Many colonists viewed an armed populace as essential protection against tyranny and standing armies.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="date">1787–1789</div>
+        <p>U.S. Constitution drafted and ratified. Anti-Federalists demanded explicit protections; the Bill of Rights emerged as a compromise.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="date">1791</div>
+        <p>Second Amendment ratified along with the other nine amendments in the Bill of Rights.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="date">19th–20th Century</div>
+        <p>Courts and legislatures interpreted the Amendment in limited ways, often focusing on militia service and state regulation.</p>
+      </div>
+    </div>
+
+    <h2>Original Meaning &amp; Interpretations</h2>
+    <p>
+      The Second Amendment contains two clauses. Scholars and jurists have long debated how they relate:
+    </p>
+    <ul>
+      <li><strong>Prefatory clause</strong> (“A well regulated Militia...”) explains a purpose.</li>
+      <li><strong>Operative clause</strong> (“the right of the people to keep and bear Arms, shall not be infringed”) is the command.</li>
+    </ul>
+
+    <div class="info-box">
+      <strong>Two primary historical views:</strong><br>
+      • <strong>Collective / militia-centric:</strong> The right is primarily tied to organized state militias.<br>
+      • <strong>Individual right:</strong> The right belongs to ordinary citizens for self-defense and other lawful purposes.
+    </div>
+
+    <!-- Landmark Cases -->
+    <h2>Landmark Supreme Court Decisions</h2>
+    <div class="cases-grid">
+      <div class="case-card">
+        <div class="year">1939 • United States v. Miller</div>
+        <h4>Miller</h4>
+        <p>Upheld federal restrictions on sawed-off shotguns. The Court emphasized connection to a “well regulated militia.” Long read narrowly by lower courts.</p>
+      </div>
+      <div class="case-card">
+        <div class="year">2008 • District of Columbia v. Heller</div>
+        <h4>Heller</h4>
+        <p>Landmark 5–4 ruling: the Second Amendment protects an <strong>individual right</strong> to possess firearms for traditionally lawful purposes such as self-defense in the home. Struck down D.C.’s handgun ban.</p>
+      </div>
+      <div class="case-card">
+        <div class="year">2010 • McDonald v. City of Chicago</div>
+        <h4>McDonald</h4>
+        <p>Extended Heller to the states. The individual right is “incorporated” against state and local governments through the Due Process Clause of the 14th Amendment.</p>
+      </div>
+      <div class="case-card">
+        <div class="year">2016 • Caetano v. Massachusetts</div>
+        <h4>Caetano</h4>
+        <p>Per curiam decision: the Second Amendment protects arms that were not in existence at the founding (e.g., stun guns). The right is not limited to 18th-century weapons.</p>
+      </div>
+      <div class="case-card">
+        <div class="year">2022 • NYSRPA v. Bruen</div>
+        <h4>Bruen</h4>
+        <p>6–3 ruling: the government must demonstrate that a gun regulation is consistent with the nation’s historical tradition of firearm regulation. Struck down New York’s “proper cause” concealed carry licensing requirement.</p>
+      </div>
+      <div class="case-card">
+        <div class="year">2024 • United States v. Rahimi</div>
+        <h4>Rahimi</h4>
+        <p>Upheld federal ban on firearm possession by individuals subject to domestic violence restraining orders. Demonstrated that certain longstanding prohibitions remain constitutional under Bruen’s history-and-tradition test.</p>
+      </div>
+    </div>
+
+    <h2>Modern Legal Framework</h2>
+    <p>
+      Post-<em>Bruen</em>, courts use a history-and-tradition test when evaluating firearm regulations. Laws must be analogous to historical regulations the Founding generation would have accepted. This approach has led to significant litigation around:
+    </p>
+    <ul>
+      <li>Concealed and open carry permitting</li>
+      <li>Assault weapon and magazine restrictions</li>
+      <li>Age restrictions and commercial sales rules</li>
+      <li>Prohibitions for certain classes of persons (felons, domestic abusers, etc.)</li>
+      <li>“Sensitive places” restrictions (schools, courthouses, etc.)</li>
+    </ul>
+
+    <div class="info-box">
+      <strong>Important note:</strong> The right is not unlimited. As stated in <em>Heller</em>, “nothing in our opinion should be taken to cast doubt on longstanding prohibitions on the possession of firearms by felons and the mentally ill, or laws forbidding the carrying of firearms in sensitive places such as schools and government buildings.”
+    </div>
+
+    <h2>Public Debate &amp; Context</h2>
+    <p>
+      The Second Amendment remains one of the most vigorously debated provisions of the Constitution. Key points of discussion include:
+    </p>
+    <div class="fact-grid">
+      <div class="fact-card">
+        <span class="label">Public Safety</span>
+        Strong arguments exist for effective regulation to reduce gun violence while respecting constitutional rights.
+      </div>
+      <div class="fact-card">
+        <span class="label">Self-Defense</span>
+        Millions of Americans cite personal and home protection as a primary reason for owning firearms.
+      </div>
+      <div class="fact-card">
+        <span class="label">Culture &amp; History</span>
+        Firearms play roles in hunting, sport shooting, collecting, and historical reenactment traditions.
+      </div>
+      <div class="fact-card">
+        <span class="label">State Variations</span>
+        Firearm laws vary widely by state — from shall-issue to permitless carry and differing restrictions.
+      </div>
+    </div>
+
+    <h2>Further Reading &amp; Primary Sources</h2>
+    <ul>
+      <li><a href="https://www.archives.gov/founding-docs/bill-of-rights" target="_blank" rel="noopener">National Archives — Bill of Rights</a></li>
+      <li><a href="https://constitution.congress.gov/constitution/amendment-2/" target="_blank" rel="noopener">Congress.gov — Constitution Annotated (Amendment 2)</a></li>
+      <li><a href="https://www.supremecourt.gov/" target="_blank" rel="noopener">Supreme Court of the United States — Opinions (search Heller, McDonald, Bruen, Rahimi)</a></li>
+      <li><a href="https://www.law.cornell.edu/wex/second_amendment" target="_blank" rel="noopener">LII / Legal Information Institute — Second Amendment overview</a></li>
+    </ul>
+
+    <p style="margin-top: 2.5rem; font-size:0.95rem; opacity:0.75;">
+      This page is intended as a neutral educational resource. Legal interpretation continues to evolve through legislation and court decisions.
+    </p>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <p>
+      © 2025–2026 • Educational content on the <strong>Second Amendment</strong><br>
+      Part of the Samuel Castillo Resource Hub
+    </p>
+    <p>
+      <a href="/hub/index.html">Return to Resource Hub</a> •
+      <a href="/hub/about.html">About</a> •
+      <a href="/">Main Site + Dolphin Chat</a>
+    </p>
+  </footer>
+
+  <script>
+    // Highlight current nav link
+    (function() {
+      const currentPage = location.pathname.split('/').pop() || 'index.html';
+      document.querySelectorAll('.main-nav a').forEach(link => {
+        const href = link.getAttribute('href') || '';
+        if (href.endsWith(currentPage) || (currentPage === 'second-amendment.html' && href.includes('second-amendment'))) {
+          link.classList.add('active');
+        }
+      });
+    })();
+
+    // Optional: simple keyboard support for dropdowns (hover already works)
+    console.log('%c[Second Amendment] Educational page ready.', 'color:#8a8494');
+  </script>
+</body>
+</html>
