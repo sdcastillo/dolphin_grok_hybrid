@@ -1,1 +1,77 @@
-$(cat /tmp/gitignore.txt)
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual environments
+venv/
+ENV/
+env/
+.venv/
+venv.bak/
+
+# Database (local)
+*.sqlite
+*.sqlite3
+*.db
+
+# Secrets - NEVER COMMIT
+.env
+.env.local
+.env.*.local
+.config/tailscale/
+.ssh/tailscale_ed25519
+.ssh/tailscale_ed25519.pub
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Grok (user-specific, do not commit full runtime data)
+.grok/
+!.grok/config.toml
+
+# Caches, local installs, models, ssh, history
+.cache/
+.local/
+.ollama/
+.huggingface/
+.ssh/
+.config/cloak
+.config/fish/
+*.log
+.bash_history
+.bashrc
+.bash_profile
+.profile
+.cloud-locale-test.skip
+haikus_dolphin.log
+.models/
+voices/
+models/tts/
