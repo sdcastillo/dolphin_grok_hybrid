@@ -31,9 +31,6 @@ This is the source for the dolphin_grok_hybrid project hosted at https://github.
 ## Local Development & Git Notes
 
 - Run with `uvicorn main:app` after setting up Ollama and .env.
-- The `static/hub` directory received a dedicated commit: "making first commit of directory for all files".
-- All API keys (OPENAI, GITHUB_PAT, XAI, SUPABASE, HF etc.) are in .env and **strictly gitignored**.
-- No secrets are pushed to this repo.
 
 ## License
 
