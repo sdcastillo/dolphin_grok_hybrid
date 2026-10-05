@@ -56,7 +56,7 @@ The hybrid is a router. Text, including the rating prefix and any TeX in the rep
 - **Routing.** Local Ollama for text. xAI for the documented image and video routes.
 - **Math in a reply.** LaTeX is text the model generated. Rendering is a client step.
 
-The source for this site is the [dolphin_grok_hybrid](https://github.com/sdcastillo/dolphin_grok_hybrid) repository. Hub links: [Home](https://sdcastillo.github.io/), [About](https://sdcastillo.github.io/about/), and [Code](https://sdcastillo.github.io/code/).
+The source for this site is the [dolphin_grok_hybrid](https://github.com/sdcastillo/dolphin_grok_hybrid) repository. Hub links: [Home](https://sdcastillo.github.io/), [About](https://sdcastillo.github.io/about.html), [Code](https://sdcastillo.github.io/code.html), and [Linktree](https://linktr.ee/samuel.castillo).
 
 <script>
   window.MathJax = {
