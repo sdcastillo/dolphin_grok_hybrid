@@ -1,0 +1,102 @@
+{
+  "library_roots": [
+    "/home/sandcastle/JARVIS_APP/data/media-library/audio",
+    "/home/sandcastle/JARVIS_APP/data/media-library/video",
+    "/home/sandcastle/music-web-staging",
+    "/home/sandcastle/Videos"
+  ],
+  "tags": {
+    "paradise-road": [
+      "epic-rock",
+      "dc",
+      "guitar",
+      "rock"
+    ],
+    "fractured-soul": [
+      "rock",
+      "guitar",
+      "intense"
+    ],
+    "ultra-soulful-blues": [
+      "blues",
+      "guitar",
+      "soul"
+    ],
+    "always-with-me": [
+      "ballad",
+      "soft",
+      "guitar"
+    ],
+    "panama": [
+      "epic-rock",
+      "dc",
+      "guitar",
+      "cover",
+      "van-halen"
+    ],
+    "eruption": [
+      "epic-rock",
+      "dc",
+      "van-halen",
+      "guitar"
+    ],
+    "ehv-eruption": [
+      "epic-rock",
+      "dc",
+      "van-halen",
+      "guitar"
+    ],
+    "holy-diver": [
+      "epic-rock",
+      "dc",
+      "guitar",
+      "cover"
+    ],
+    "hot-for-teacher": [
+      "epic-rock",
+      "dc",
+      "van-halen",
+      "guitar"
+    ],
+    "crazy-train": [
+      "epic-rock",
+      "dc",
+      "guitar",
+      "cover"
+    ],
+    "be-the-change": [
+      "epic-rock",
+      "dc",
+      "guitar"
+    ],
+    "delta": [
+      "epic-rock",
+      "dc",
+      "guitar"
+    ],
+    "gamma": [
+      "epic-rock",
+      "dc",
+      "guitar"
+    ],
+    "top-gun": [
+      "epic-rock",
+      "dc",
+      "guitar"
+    ],
+    "van-halen": [
+      "epic-rock",
+      "dc",
+      "van-halen",
+      "guitar"
+    ]
+  },
+  "pick_defaults": {
+    "dc": "eruption",
+    "epic-rock": "eruption",
+    "blues": "ultra-soulful-blues",
+    "ballad": "always-with-me"
+  },
+  "host": "0.0.0.0",
+  "port": 8010
+}
