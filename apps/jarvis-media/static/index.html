@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Jarvis Media</title>
+  <style>
+    body { margin: 0; font-family: system-ui, sans-serif; background: #0b1220; color: #e8eef8; }
+    main { max-width: 40rem; margin: 0 auto; padding: 1.5rem 1rem 3rem; }
+    li { margin: 0.45rem 0; }
+    button { background: #2affc1; color: #06241c; border: 0; border-radius: 999px; padding: 0.25rem 0.7rem; font-weight: 700; }
+    #now { margin: 1rem 0; }
+  </style>
+</head>
+<body>
+<main>
+  <h1>Library</h1>
+  <p>Tracks and clips found in the folders listed in <code>config.json</code>.</p>
+  <div id="now"></div>
+  <ul id="list"></ul>
+</main>
+<script>
+  const list = document.getElementById("list");
+  const now = document.getElementById("now");
+  function play(item) {
+    now.innerHTML = "";
+    const el = document.createElement(item.kind === "video" ? "video" : "audio");
+    el.controls = true;
+    el.autoplay = true;
+    el.src = item.stream_url;
+    now.appendChild(el);
+  }
+  fetch("/api/media/library").then(r => r.json()).then(data => {
+    const items = data.items || [];
+    if (!items.length) {
+      list.innerHTML = "<li>No audio or video files in the library folders yet.</li>";
+      return;
+    }
+    for (const item of items) {
+      const li = document.createElement("li");
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.textContent = "Play";
+      btn.addEventListener("click", () => play(item));
+      li.append(btn, " ", item.title, " (", item.kind, ")");
+      list.appendChild(li);
+    }
+  }).catch(() => { list.innerHTML = "<li>Library request failed.</li>"; });
+</script>
+</body>
+</html>

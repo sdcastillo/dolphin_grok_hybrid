@@ -45,8 +45,17 @@ TRENDS_SCHEDULER_ENABLED = os.getenv("TRENDS_SCHEDULER_ENABLED", "true").lower()
     "yes",
 )
 
-supabase = create_client(SUPABASE_URL, SUPABASE_SERVICE_KEY)
 _scheduler_task: asyncio.Task | None = None
+_supabase = None
+
+
+def _supabase_client():
+    global _supabase
+    if not SUPABASE_URL or not SUPABASE_SERVICE_KEY:
+        raise RuntimeError("SUPABASE_URL and SUPABASE_SERVICE_KEY are required for news storage")
+    if _supabase is None:
+        _supabase = create_client(SUPABASE_URL, SUPABASE_SERVICE_KEY)
+    return _supabase
 
 
 def _parse_twitter_trends(payload) -> list[dict]:
@@ -307,7 +316,7 @@ def _save_trends(trends: list[dict]) -> list[dict]:
             "source": trend.get("source", "x_trending"),
         }
         try:
-            supabase.table("news_trends").upsert(
+            _supabase_client().table("news_trends").upsert(
                 row,
                 on_conflict="topic,source",
             ).execute()
@@ -434,7 +443,7 @@ def get_stored_trends(limit: int = 20) -> list[dict]:
     fetch_n = max(limit * 5, 40)
     try:
         result = (
-            supabase.table("news_trends")
+            _supabase_client().table("news_trends")
             .select("id, topic, tweet_volume, summary, link, published, source, fetched_at")
             .order("fetched_at", desc=True)
             .limit(fetch_n)

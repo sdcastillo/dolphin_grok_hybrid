@@ -29,20 +29,34 @@ SUPABASE_KEY: str | None = (
     or os.getenv("SUPABASE_KEY")
 )
 
-if not SUPABASE_URL or not SUPABASE_KEY:
-    raise RuntimeError(
-        "Missing Supabase credentials.\n"
-        "Please set SUPABASE_URL and SUPABASE_SERVICE_KEY in your .env file.\n"
-        "Copy .env.example to .env and fill in the values.\n"
-        "You provided the publishable key; you still need to add your project URL."
-    )
+_client: Client | None = None
 
-supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
+
+class _LazyClient:
+    """Defer create_client until a request actually logs something.
+
+    Chat and health still start when SUPABASE_URL is unset. The first storage
+    or table call raises the same missing-credential error as before.
+    """
+
+    def __getattr__(self, name: str):
+        return getattr(get_supabase(), name)
 
 
 def get_supabase() -> Client:
     """Return the Supabase client instance."""
-    return supabase
+    global _client
+    if _client is None:
+        if not SUPABASE_URL or not SUPABASE_KEY:
+            raise RuntimeError(
+                "Missing Supabase credentials.\n"
+                "Please set SUPABASE_URL and SUPABASE_SERVICE_KEY in your .env file."
+            )
+        _client = create_client(SUPABASE_URL, SUPABASE_KEY)
+    return _client
+
+
+supabase: Client = _LazyClient()  # type: ignore[assignment]
 
 
 def test_connection() -> bool:

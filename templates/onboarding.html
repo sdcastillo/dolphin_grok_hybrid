@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Join the tailnet</title>
+  <style>
+    body { margin: 0; font-family: "Source Sans 3", "Segoe UI", sans-serif; background: #f3faf8; color: #122033; }
+    main { max-width: 38rem; margin: 0 auto; padding: 2.2rem 1.2rem; }
+    a.btn, button { background: #0c1330; color: #f3fffb; border: 0; border-radius: 999px; padding: 0.65rem 1rem; font-weight: 700; text-decoration: none; }
+    code { background: #e7eefc; padding: 0.1rem 0.35rem; border-radius: 6px; }
+  </style>
+</head>
+<body>
+<main>
+  <h1>You're in</h1>
+  <p>{{ polar_hint }}</p>
+  {% if entitlement and entitlement.tailscale_invite_url %}
+  <p><a class="btn" href="{{ entitlement.tailscale_invite_url }}">Accept the Tailscale invite</a></p>
+  {% else %}
+  <p>No invite is attached to this checkout yet. Install Tailscale, then open the chat from a device already on the tailnet.</p>
+  {% endif %}
+  <p><a href="{{ tailscale_download }}">Download Tailscale</a> · <a href="{{ dolphin_chat_url }}">Open the chat</a></p>
+  {% if entitlement and entitlement.access_token %}
+  <p>Access token: <code>{{ entitlement.access_token }}</code></p>
+  {% endif %}
+  {% if session_id %}<p>Checkout <code>{{ session_id }}</code></p>{% endif %}
+</main>
+</body>
+</html>
