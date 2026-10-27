@@ -29,6 +29,12 @@ This is the source for the dolphin_grok_hybrid project hosted at https://github.
 - `amp_proxy.py`: Proxies the local guitar amp UI at `/amp/`.
 - `tailscale_provision.py`: Tailscale user invites (`TAILSCALE_API_KEY`, `TAILSCALE_TAILNET`).
 - `database.py`: Local SQLite helpers.
+- `direct_db.py`: Postgres when `DATABASE_URL` is a postgres URL, otherwise `data/jarvis.sqlite`, for chat logs, TTS rows, SAAM notes, and headlines.
+- `access_store.py` and `stripe_billing.py`: Checkout entitlements. Stripe stays off until `STRIPE_SECRET_KEY` is set.
+- `soap_service.py`: Echo, Transmit, SendMessage, GetHealth, and GetHeadlines.
+- `minecraft_gen.py`: Deterministic block picture for `/imagine`.
+- `health_library.py`: Adds notes from `HEALTH_CONTEXT_FILE` only when that file exists and the question is about health.
+- `templates/`: Chat page, paywall, and Tailscale onboarding.
 - `apps/jarvis-media/`: Local music and guitar-video player with a small API.
 - `static/hub/`: Custom built educational HTML pages.
 - `var-www/`: HTML pages from /var/www/ (various project sites like integritycare, aloha, etc.).
