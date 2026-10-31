@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Unlock Dolphin</title>
+  <style>
+    body { margin: 0; font-family: "Source Sans 3", "Segoe UI", sans-serif; background: #0c1330; color: #f3fffb; }
+    main { max-width: 36rem; margin: 0 auto; padding: 2.5rem 1.2rem; }
+    h1 { letter-spacing: -0.04em; }
+    a, button { color: #06241c; background: #2affc1; border: 0; border-radius: 999px; padding: 0.7rem 1.1rem; font-weight: 700; text-decoration: none; }
+    p { line-height: 1.5; color: #d5e6ea; }
+    .links { margin-top: 1rem; }
+    .links a { color: #2affc1; background: transparent; padding: 0; }
+  </style>
+</head>
+<body>
+<main>
+  <h1>Chat stays on your tailnet</h1>
+  <p id="blurb">When billing is turned on, checkout unlocks Dolphin and the Tailscale invite. If Stripe is not configured on this machine, the chat is already open.</p>
+  <p><button id="pay" type="button">Continue to checkout</button></p>
+  <p id="status"></p>
+  <p class="links"><a href="/privacy">Privacy</a> · <a href="/terms">Terms</a></p>
+</main>
+<script>
+  const status = document.getElementById("status");
+  document.getElementById("pay").addEventListener("click", async () => {
+    status.textContent = "Opening checkout…";
+    const res = await fetch("/billing/checkout", {method: "POST", headers: {"Content-Type": "application/json"}, body: "{}"});
+    const body = await res.json();
+    if (body.url) { window.location = body.url; return; }
+    status.textContent = body.detail || body.message || "Checkout is not configured on this machine.";
+  });
+  fetch("/billing/config").then(r => r.json()).then(cfg => {
+    if (!cfg.stripe_configured) {
+      document.getElementById("blurb").textContent = "Stripe is not configured here, so checkout is off. Open the chat if this machine is already unlocked.";
+    } else if (cfg.amount_cents) {
+      const amount = (cfg.amount_cents / 100).toFixed(2);
+      document.getElementById("blurb").textContent = `${cfg.product}: ${amount} ${String(cfg.currency || "usd").toUpperCase()}. After payment you get a Tailscale invite and a link back to the chat.`;
+    }
+  }).catch(() => {});
+</script>
+</body>
+</html>

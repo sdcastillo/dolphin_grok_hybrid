@@ -31,5 +31,8 @@ exclude:
   - README.md
   - NEW_BLUEPRINTS.md
   - main.py
+  - "*.py"
   - requirements.txt
   - LICENSE
+  - apps
+  - scripts

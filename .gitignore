@@ -31,6 +31,9 @@ venv.bak/
 *.sqlite
 *.sqlite3
 *.db
+data/
+static/generated/
+static/clips/
 
 # Secrets - NEVER COMMIT
 .env

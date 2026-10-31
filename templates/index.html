@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dolphin</title>
+  <style>
+    :root { color-scheme: dark; }
+    body { margin: 0; font-family: "Source Sans 3", "Segoe UI", sans-serif; background: #0c1330; color: #f3fffb; }
+    main { max-width: 42rem; margin: 0 auto; padding: 2rem 1.2rem 3rem; }
+    h1 { font-family: Outfit, sans-serif; letter-spacing: -0.04em; margin: 0 0 0.4rem; }
+    p.lede { color: #d5e6ea; line-height: 1.5; }
+    form, .log { display: grid; gap: 0.7rem; }
+    textarea, select, button { font: inherit; border-radius: 12px; }
+    textarea, select { background: #122033; color: #f3fffb; border: 1px solid #345; padding: 0.7rem; }
+    button { background: #2affc1; color: #06241c; border: 0; font-weight: 700; padding: 0.7rem 1rem; cursor: pointer; }
+    .log { margin-top: 1.2rem; }
+    .bubble { background: #122033; border-radius: 14px; padding: 0.8rem 1rem; white-space: pre-wrap; }
+    .you { border-left: 3px solid #6b53ff; }
+    .bot { border-left: 3px solid #2affc1; }
+    a { color: #2affc1; }
+    .row { display: flex; gap: 0.6rem; align-items: center; flex-wrap: wrap; }
+  </style>
+</head>
+<body>
+<main>
+  <h1>Dolphin</h1>
+  <p class="lede">Local chat on this machine. Ask something and the reply comes from the Dolphin model running here.</p>
+  {% if show_health_hub %}<p><a href="/hub/">Notes on this tailnet</a></p>{% endif %}
+  <form id="chat">
+    <label>Rating
+      <select name="rating">
+        <option>G</option>
+        <option selected>PG</option>
+        <option>R</option>
+        <option>NC17</option>
+      </select>
+    </label>
+    <textarea name="message" rows="4" required placeholder="What do you want to talk about?"></textarea>
+    <div class="row">
+      <button type="submit">Send</button>
+      {% if tts_enabled %}<label><input type="checkbox" name="speak"> Speak the reply</label>{% endif %}
+      {% if img_enabled %}<a href="/imagine?prompt=castle&amp;size=256">A sample picture</a>{% endif %}
+    </div>
+  </form>
+  <div class="log" id="log"></div>
+</main>
+<script>
+  const form = document.getElementById("chat");
+  const log = document.getElementById("log");
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    const data = new FormData(form);
+    const message = String(data.get("message") || "").trim();
+    if (!message) return;
+    const you = document.createElement("div");
+    you.className = "bubble you";
+    you.textContent = message;
+    log.appendChild(you);
+    const res = await fetch("/chat", {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({
+        message,
+        rating: data.get("rating") || "PG",
+        speak: data.get("speak") === "on"
+      })
+    });
+    const body = await res.json();
+    const bot = document.createElement("div");
+    bot.className = "bubble bot";
+    bot.textContent = body.response || body.error || "No reply.";
+    log.appendChild(bot);
+    form.reset();
+  });
+</script>
+</main>
+</body>
+</html>
